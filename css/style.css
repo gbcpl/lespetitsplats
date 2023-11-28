@@ -56,3 +56,142 @@ header h1 {
   height: 52px;
   right: 10px;
 }
+
+main {
+  margin-top: -300px;
+  background: #EDEDED;
+}
+
+#filter-recipes {
+  padding-top: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#recipes-container {
+  margin-top: 50px;
+  margin-right: 50px;
+  margin-left: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.recipes {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 380px;
+  margin-bottom: 50px;
+  border-radius: 21px;
+  box-shadow: 0px 4px 34px 30px rgba(0, 0, 0, 0.04);
+  font-family: "Manrope";
+}
+
+.recipes img {
+  width: 100%;
+  height: 253px;
+  object-fit: cover;
+  border-top-right-radius: 21px;
+  border-top-left-radius: 21px; 
+}
+
+.recipes h2 {
+  padding-left: 20px;
+  padding-right: 20px;
+  font-family: "Anton";
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.description {
+  padding-left: 20px;
+  padding-right: 20px;
+  font-family: 'Manrope';
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.foods {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.food {
+  display: flex;
+  flex-direction: column;
+  width: 33%;
+  margin-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 14px;
+  font-family: 'Manrope';
+}
+
+.food p {
+  margin: 0px;
+}
+
+.titles {
+  font-size: 12px;
+  font-weight: 700px;
+  font-family: 'Manrope';
+  color: #7A7A7A;
+  padding-left: 20px;
+  padding-right: 20px;
+
+}
+
+.titleFood {
+  font-weight: 500;
+}
+
+.numberFood {
+  color:#7A7A7A;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+#filters {
+  display: flex;
+  flex-direction: row;
+  gap: 63px;
+}
+
+.button-filters {
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  width: 163px;
+  height: 22px;
+  padding: 17px 16px 17px 16px;
+  font-family: 'Manrope';
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 11px;
+  background: #FFF;
+}
+
+#number-of-recipes {
+  font-size: 21px;
+}
+
+.time {
+  width: 35px;
+  height: 16px;
+  border-radius: 14px;
+  background-color: #FFD15B;
+  padding: 5px 15px 5px 15px;
+  position: absolute;
+  right: 15px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 400;
+}
