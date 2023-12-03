@@ -13,7 +13,7 @@ function findFood() {
       for (let j = 0; j < recipes[i].ingredients.length; j++) {
         
 
-        if (recipes[i].ingredients[j].ingredient.toLowerCase().includes(algoSearch.value)) {
+        if (recipes[i].ingredients[j].ingredient.toLowerCase().includes(algoSearch.value.toLowerCase())) {
 
           arrayOfRecipes.push(recipes[i]);
           console.log(arrayOfRecipes);
