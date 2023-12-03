@@ -6,7 +6,11 @@ const listRecipes = document.getElementById("recipes-container");
 
 // Creating recipes cards from recipes array
 
-recipes.forEach((recipe) => {
+
+function displayRecipes(array) {
+  listRecipes.innerHTML = "";
+
+  array.forEach((recipe) => {
   const photo = `assets/images/${recipe.image}`
   const divRecipes = document.createElement("div");
   const img = document.createElement("img");
@@ -64,6 +68,9 @@ recipes.forEach((recipe) => {
   divRecipes.appendChild(time)
 
 })
+}
+
+displayRecipes(recipes);
 
 // Using food button
 
