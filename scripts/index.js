@@ -4,6 +4,8 @@ number.innerHTML = recipes.length + " recettes";
 
 const listRecipes = document.getElementById("recipes-container");
 
+// Creating recipes cards from recipes array
+
 recipes.forEach((recipe) => {
   const photo = `assets/images/${recipe.image}`
   const divRecipes = document.createElement("div");
@@ -14,7 +16,7 @@ recipes.forEach((recipe) => {
   const recipeFood = document.createElement("h3");
   const divFoods = document.createElement("div");
   const time = document.createElement("p");
-
+ 
   img.setAttribute("src", photo);
   divRecipes.setAttribute("class", "recipes");
   recipeTitle.innerHTML = recipe.name;
@@ -62,3 +64,71 @@ recipes.forEach((recipe) => {
   divRecipes.appendChild(time)
 
 })
+
+// Using food button
+
+const food = document.getElementById("food");
+const searchFood = document.getElementById("search-food");
+
+foodOpen = false;
+
+function openFood() {
+  if (!foodOpen) {
+    searchFood.style.display = "block";
+    searchMachines.style.display = "none";
+    searchTools.style.display = "none"
+    foodOpen = true;
+    machinesOpen = false;
+    toolsOpen = false;
+  } else {
+    searchFood.style.display = "none";
+    foodOpen = false;
+  }
+}
+
+food.addEventListener("click", openFood);
+
+// Using machines button
+
+const machines = document.getElementById("machines");
+const searchMachines = document.getElementById("search-machines");
+
+machinesOpen = false;
+
+function openMachines() {
+  if (!machinesOpen) {
+    searchMachines.style.display = "block";
+    searchFood.style.display = "none";
+    searchTools.style.display = "none"
+    machinesOpen = true;
+    foodOpen = false;
+    toolsOpen = false;
+  } else {
+    searchMachines.style.display = "none";
+    machinesOpen = false;
+  }
+}
+
+machines.addEventListener("click", openMachines);
+
+// Using tools button;
+
+const tools = document.getElementById("tools");
+const searchTools = document.getElementById("search-tools");
+toolsOpen = false;
+
+function openTools() {
+  if (!toolsOpen) {
+    searchTools.style.display = "block";
+    searchFood.style.display = "none";
+    searchMachines.style.display = "none";
+    toolsOpen = true;
+    foodOpen = false;
+    machinesOpen = false;
+  } else {
+    searchTools.style.display = "none";
+    toolsOpen = false;
+  }
+}
+
+tools.addEventListener("click", openTools);

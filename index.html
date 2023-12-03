@@ -16,16 +16,33 @@
     <img src="assets/logo/logo2.png" alt="">
     <h1>CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN, SIMPLES ET DÉLICIEUSES</h1>
     <div id="searchbar">
-      <input type="text" placeholder="Rechercher une recette, un ingrédient, ...">
+      <input type="text" id="searchFood" placeholder="Rechercher une recette, un ingrédient, ...">
       <img src="assets/logo/search.png" alt="">
     </div>
   </header>
   <main>
     <div id="filter-recipes">
       <div id="filters">
-        <button class="button-filters">Ingrédients<i class="fa-solid fa-chevron-down" style="color: #000000;"></i></button>
-        <button class="button-filters">Appareils<i class="fa-solid fa-chevron-down" style="color: #000000;"></i></button>
-        <button class="button-filters">Ustensiles<i class="fa-solid fa-chevron-down" style="color: #000000;"></i></button>
+        <div id="food-filter">
+          <button id="food" class="button-filters">Ingrédients<i class="fa-solid fa-chevron-down" style="color: #000000;"></i></button>
+          <div id="search-food">
+            <input id="searchbar-food" class="search-filters" type="text">
+            <p>Noix de coco</p>
+          </div>
+        </div>
+        <div id="machines-filter">
+          <button id="machines" class="button-filters">Appareils<i class="fa-solid fa-chevron-down" style="color: #000000;"></i></button>
+          <div id="search-machines">
+            <input id="searchbar-machines" class="search-filters" type="text">
+          </div>
+        </div>
+        <div id="tools-filter">
+          <button id ="tools" class="button-filters">Ustensiles<i class="fa-solid fa-chevron-down" style="color: #000000;"></i></button>
+          <div id="search-tools">
+            <input id="searchbar-tools" class="search-filters" type="text">
+            <p>Noix de coco</p>
+          </div>
+        </div>
       </div>
       <div id="number-of-recipes"></div>
     </div>
@@ -33,6 +50,7 @@
     <div id="recipes-container"></div>
   </main>
   <script src="data/recipes.js"></script>
+  <script src="scripts/algo.js"></script>
   <script src="scripts/index.js"></script>
 </body>
 </html>
