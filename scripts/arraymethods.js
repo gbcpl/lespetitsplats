@@ -10,8 +10,10 @@ let secondSearchFirst;
 
 algoSearch.addEventListener("input", findFood);
 
+// main function for the main search input
 function findFood() {
 
+  // if we didn't search something via the filters first, we enter the following if
   if (!secondSearchFirst) {
     
     mainSearchFirst = true;
@@ -40,6 +42,7 @@ function findFood() {
 
     getTag();
 
+    // we reset the result field and display all the recipes again
     if (algoSearch.value.length === 0) {
       displayRecipes(recipes);
       number.innerHTML = recipes.length + " recettes";
@@ -50,53 +53,21 @@ function findFood() {
       mainSearchFirst = false;
     }
 
+  // activated when we have searched via the filters first 
   } else if (secondSearchFirst) {
 
     let newRecipes = [];
 
     if (algoSearch.value.length >= 3) {
       
-      for (let i = 0; i < arrayOfRecipes.length; i++) {
-      
-        for (let j = 0; j < arrayOfRecipes[i].ingredients.length; j++) {
-
-          if (arrayOfRecipes[i].ingredients[j].ingredient.toLowerCase().includes(algoSearch.value.toLowerCase())) {
-
-            if (!newRecipes.includes(arrayOfRecipes[i])) {
-
-            newRecipes.push(arrayOfRecipes[i]);
-            displayRecipes(newRecipes);
-            console.log(newRecipes);
-            break;          
-            }
-          } 
-          
-        if (arrayOfRecipes[i].description.toLowerCase().includes(algoSearch.value.toLowerCase())) {
-
-          if (!newRecipes.includes(arrayOfRecipes[i])) {
-
-            newRecipes.push(arrayOfRecipes[i]);
-            displayRecipes(newRecipes);
-
-          } else {
-            console.log("déjà présent")
-          }
-        }
-
-        if (arrayOfRecipes[i].name.toLowerCase().includes(algoSearch.value.toLowerCase())) {
-
-          if (!newRecipes.includes(arrayOfRecipes[i])) {
-
-            newRecipes.push(arrayOfRecipes[i]);
-            displayRecipes(newRecipes);
-
-          } else {
-            console.log("déjà présent")
-          }
-          }
-        }
+      newRecipes = arrayOfRecipes.filter(recipe => 
+        recipe.ingredients.some(ingredient => 
+          ingredient.ingredient.toLowerCase().includes(algoSearch.value.toLowerCase())) ||
+        recipe.description.toLowerCase().includes(algoSearch.value.toLowerCase()) ||
+        recipe.name.toLowerCase().includes(algoSearch.value.toLowerCase()))
+            
+      displayRecipes(newRecipes);
       }
-    }
 
     if (newRecipes.length === 0) {
       listRecipes.innerHTML = `Aucune recette ne contient ‘${algoSearch.value}’ vous pouvez chercher «tarte aux pomme», «poisson», etc`;
