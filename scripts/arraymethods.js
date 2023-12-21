@@ -21,6 +21,11 @@ function findFood() {
     if (algoSearch.value.length >= 3) {
 
       listRecipes.innerHTML = "";
+
+      // filter returns true or false and adds the recipe if true, 
+      // so first it checks if the input value is in ingredient, 
+      // then if not, in the description, and if not, in the name
+
       arrayOfRecipes = recipes.filter(recipe => 
         recipe.ingredients.some(ingredient => 
           ingredient.ingredient.toLowerCase().includes(algoSearch.value.toLowerCase())) ||
@@ -36,13 +41,17 @@ function findFood() {
       numberOfRecipes(arrayOfRecipes);
     } 
 
+    // display all the ingredients, appliances, and tools, of arrayOfRecipes
+
     displayFood();
     displayMachines();
     displayTools();
 
+
+    // used to add / delete one or multiple tags
     getTag();
 
-    // we reset the result field and display all the recipes again
+    // we reset the result field and display all the recipes again 
     if (algoSearch.value.length === 0) {
       displayRecipes(recipes);
       number.innerHTML = recipes.length + " recettes";
@@ -97,23 +106,19 @@ function displayFood() {
   listFood.innerHTML = "";
 
   let arrayOfFood = [];
-
-  for (let i = 0; i < arrayOfRecipes.length; i++) {
-
-    for (let j = 0; j < arrayOfRecipes[i].ingredients.length; j++) {
-
-      const currentFood = arrayOfRecipes[i].ingredients[j].ingredient.toLowerCase();
-
+  
+  arrayOfRecipes.forEach(recipe => {
+    recipe.ingredients.forEach(ingredient => {
+      const currentFood = ingredient.ingredient.toLowerCase();
       if (!arrayOfFood.includes(currentFood)) {
         arrayOfFood.push(currentFood);
-        console.log(arrayOfFood);
-        const ingredient = document.createElement("p");
-        ingredient.innerHTML = currentFood;
-        ingredient.classList.add("results-list");
-        listFood.appendChild(ingredient);
+        const ingredientList = document.createElement("p");
+        ingredientList.innerHTML = currentFood;
+        ingredientList.classList.add("results-list");
+        listFood.appendChild(ingredientList);
       }
-    }
-  }
+    })
+  })
 }
 
 function displayMachines() {
@@ -121,16 +126,16 @@ function displayMachines() {
 
   let arrayOfMachines = [];
 
-  for (let i = 0; i < arrayOfRecipes.length; i++) {
-    const currentAppliance = arrayOfRecipes[i].appliance.toLowerCase();
-    if (!arrayOfMachines.includes(currentAppliance)) {
+  arrayOfRecipes.forEach(recipe => {
+    const currentAppliance = recipe.appliance.toLowerCase();
+      if (!arrayOfMachines.includes(currentAppliance)) {
       arrayOfMachines.push(currentAppliance);
       const appliance = document.createElement("p");
       appliance.innerHTML = currentAppliance;
       appliance.classList.add("results-list");
       searchAppliance.appendChild(appliance);
     }
-  }
+  })
 }
 
 function displayTools() {
@@ -138,22 +143,18 @@ function displayTools() {
 
   let arrayOfTools = [];
 
-  for (let i = 0; i < arrayOfRecipes.length; i++) {
-
-    for (let j = 0; j < arrayOfRecipes[i].ustensils.length; j++) {
-
-      const currentTools = arrayOfRecipes[i].ustensils[j].toLowerCase();
-
+  arrayOfRecipes.forEach(recipe => {
+    recipe.ustensils.forEach(ustensil => {
+      const currentTools = ustensil.toLowerCase();
       if (!arrayOfTools.includes(currentTools)) {
         arrayOfTools.push(currentTools);
-        console.log(arrayOfTools);
         const ustensil = document.createElement("p");
         ustensil.innerHTML = currentTools;
         ustensil.classList.add("results-list");
         listTools.appendChild(ustensil);
       }
-    }
-  }
+    })
+  })
 }
 
 function numberOfRecipes(array) {
@@ -171,10 +172,12 @@ function getTag() {
   let clickableList = false;
   let arrayOfTags = [];
 
-  for (let i = 0; i < list.length; i++) {
-    list[i].addEventListener("click", function() {
+  list.forEach(listTag => {
+    listTag.addEventListener("click", function() {
+      const tagText = listTag.textContent.toLowerCase();
+
       if (!clickableList) {
-        list[i].style.backgroundColor = "rgba(255, 209, 91, 1)";
+        listTag.style.backgroundColor = "rgba(255, 209, 91, 1)";
         clickableList = true;
 
         if (foodOpen) {
@@ -185,7 +188,6 @@ function getTag() {
           openTools();
         }
         
-        const tagText = list[i].textContent.toLowerCase();
         if (!arrayOfTags.includes(tagText)) {
           arrayOfTags.push(tagText);
           const tag = document.createElement("p");
@@ -195,11 +197,10 @@ function getTag() {
 
           updateRecipes(arrayOfTags);
         }
-      } else {
-        list[i].style.backgroundColor = null;
+      } else if (clickableList) {
+        listTag.style.backgroundColor = null;
         clickableList = false;
 
-        const tagText = list[i].textContent.toLowerCase();
         const index = arrayOfTags.indexOf(tagText);
         if (index !== -1) {
           arrayOfTags.splice(index, 1);
@@ -207,49 +208,23 @@ function getTag() {
           updateRecipes(arrayOfTags);
         }
       }
-    });
-  }
-
+    })
+  })
+  
+  // verify if tag clicked is present in recipe, if true, filter it in filteredRecipes, then display it
+  // this function is called each time the user add or delete a tag
   function updateRecipes(tags) {
-    const filteredRecipes = [];
-
-    for (let i = 0; i < arrayOfRecipes.length; i++) {
-      let containsAllTags = true;
-
-      for (let j = 0; j < tags.length; j++) {
-        let containsTag = false;
-
-        for (let k = 0; k < arrayOfRecipes[i].ingredients.length; k++) {
-          if (arrayOfRecipes[i].ingredients[k].ingredient.toLowerCase().includes(tags[j])) {
-            containsTag = true;
-            break;
-          }
-        }
-
-        if (arrayOfRecipes[i].appliance.toLowerCase().includes(tags[j])) {
-          console.log(tags);
-          containsTag = true;
-          break;
-        }
-
-        for (let l = 0; l < arrayOfRecipes[i].ustensils.length; l++) {
-          if (arrayOfRecipes[i].ustensils[l].toLowerCase().includes(tags[j])) {
-            containsTag = true;
-            break;
-          }
-        }
-
-        if (!containsTag) {
-          containsAllTags = false;
-          break;
-        }
-      }
-
-      if (containsAllTags) {
-        filteredRecipes.push(arrayOfRecipes[i]);
-      }
-    }
-
+    const filteredRecipes = arrayOfRecipes.filter(recipe => {
+      return tags.every(tag => {
+        return (
+          recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(tag)) 
+          || recipe.appliance.toLowerCase().includes(tag) 
+          || recipe.ustensils.some(ustensil => ustensil.toLowerCase().includes(tag))
+        );
+      });
+    });
+  
+    console.log(filteredRecipes);
     displayRecipes(filteredRecipes);
     numberOfRecipes(filteredRecipes);
   }
