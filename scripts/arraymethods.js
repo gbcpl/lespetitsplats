@@ -205,29 +205,22 @@ searchbarFood.addEventListener("input", findFoodFilter);
 
 function findFoodFilter() {
 
+  let arrayOfIngredients = []; 
+
   if (mainSearchFirst) {
 
     let newRecipes = [];
 
     if (searchbarFood.value.length >= 3) {
 
-    for (let i = 0; i < arrayOfRecipes.length; i++) {
-    
-      for (let j = 0; j < arrayOfRecipes[i].ingredients.length; j++) {
+      newRecipes = arrayOfRecipes.filter(recipe => 
+        recipe.ingredients.some(ingredient => 
+          ingredient.ingredient.toLowerCase().includes(algoSearch.value.toLowerCase())))
 
-        if (arrayOfRecipes[i].ingredients[j].ingredient.toLowerCase().includes(searchbarFood.value.toLowerCase())) {
-
-          newRecipes.push(arrayOfRecipes[i]);
-          displayRecipes(newRecipes);
-          numberOfRecipes(newRecipes);
-          displayFood(newRecipes);
-          displayMachines(newRecipes);
-          displayTools(newRecipes);
-          break;          
-        }
-      } 
-    } 
-  }
+      getTag(newRecipes);
+      displayRecipes(newRecipes);
+      numberOfRecipes(newRecipes);
+    }
 
     if (searchbarFood.value.length === 0) {
       displayRecipes(arrayOfRecipes);
@@ -239,28 +232,28 @@ function findFoodFilter() {
 
   } else if (!mainSearchFirst) {
 
-    arrayOfRecipes = [];
-    let arrayOfIngredients = [];
-  
+    let arrayOfRecipes = [];
+
     if (searchbarFood.value.length >= 3) {
   
-      for (let i = 0; i < recipes.length; i++) {
-        
-        for (let j = 0; j < recipes[i].ingredients.length; j++) {
+      arrayOfRecipes = recipes.filter(recipe =>
+        recipe.ingredients.some(ingredient =>
+          ingredient.ingredient.toLowerCase().includes(searchbarFood.value.toLowerCase())
+        )
+      );
   
-          if (recipes[i].ingredients[j].ingredient.toLowerCase().includes(searchbarFood.value.toLowerCase())) {
-              
-            arrayOfIngredients.push(recipes[i].ingredients[j].ingredient)
-            console.log(arrayOfIngredients);
-            arrayOfRecipes.push(recipes[i]);
-            displayRecipes(arrayOfRecipes);
-            console.log(arrayOfRecipes);
-            break;          
+      arrayOfRecipes.forEach(recipe =>
+        recipe.ingredients.forEach(ingredient => {
+          if (ingredient.ingredient.toLowerCase().includes(searchbarFood.value.toLowerCase())) {
+            arrayOfIngredients.push(ingredient.ingredient.toLowerCase());
           }
-        } 
-      } 
-    }
-  
+        })
+        
+      );
+      numberOfRecipes(arrayOfRecipes);
+      displayRecipes(arrayOfRecipes);  
+    } 
+    
     listFood.innerHTML = "";
     let ingredientsList = [];
 
@@ -281,8 +274,8 @@ function findFoodFilter() {
     })
 
     getTag(arrayOfRecipes);
-    numberOfRecipes(arrayOfRecipes);
-    
+
+
     if (searchbarFood.value.length === 0) {
       console.log(recipes);
       displayRecipes(recipes);
@@ -295,29 +288,27 @@ function findFoodFilter() {
   }
 }
 
+
 const searchbarMachines = document.getElementById("searchbar-machines");
 searchbarMachines.addEventListener("input", findMachineFilter);
 
 function findMachineFilter() {
+
+  let arrayOfAppliances = []; 
 
   if (mainSearchFirst) {
     
     let newRecipes = [];
 
     if (searchbarMachines.value.length >= 3) {
-      for (let i = 0; i < arrayOfRecipes.length; i++) {
-      
-        if (arrayOfRecipes[i].appliance.toLowerCase().includes(searchbarMachines.value.toLowerCase())) {
 
-          newRecipes.push(arrayOfRecipes[i]);
-          displayRecipes(newRecipes);
-          numberOfRecipes(newRecipes);
-          displayFood(newRecipes);
-          displayMachines(newRecipes);
-          displayTools(newRecipes);
-          break;
-        } 
-      }
+      newRecipes = arrayOfRecipes.filter(recipe => 
+        recipe.appliance.toLowerCase().includes(algoSearch.value.toLowerCase())
+      )
+
+      getTag(newRecipes);
+      displayRecipes(newRecipes);
+      numberOfRecipes(newRecipes);      
     } 
 
     if (searchbarMachines.value.length === 0) {
@@ -329,30 +320,27 @@ function findMachineFilter() {
 
     } 
   } else if (!mainSearchFirst) {
-
-    arrayOfRecipes = [];
-    let arrayOfAppliances = [];
   
+    let arrayOfRecipes = [];
+
     if (searchbarMachines.value.length >= 3) {
   
-      for (let i = 0; i < recipes.length; i++) {
-      
-        if (recipes[i].appliance.toLowerCase().includes(searchbarMachines.value.toLowerCase())) {
-  
-          if (!arrayOfRecipes.includes(recipes[i])) {
-            
-            arrayOfAppliances.push(recipes[i].appliance)
-            arrayOfRecipes.push(recipes[i]);
-            displayRecipes(arrayOfRecipes);
-          } 
-        }
-      } 
+      arrayOfRecipes = recipes.filter(recipe =>
+        recipe.appliance.toLowerCase().includes(searchbarMachines.value.toLowerCase())
+      );
+      console.log(arrayOfRecipes)
+
+      arrayOfRecipes.forEach(recipe =>
+        arrayOfAppliances.push(recipe.appliance.toLowerCase())
+      )
+      console.log(arrayOfAppliances);
+      numberOfRecipes(arrayOfRecipes);
+      displayRecipes(arrayOfRecipes);
     }
     
     searchAppliance.innerHTML = "";
     let appliancesList = [];
 
-    console.log(arrayOfAppliances);
     arrayOfAppliances.forEach(appliance => {
 
       const currentAppliance = appliance.toLowerCase();
@@ -370,7 +358,6 @@ function findMachineFilter() {
     })
   
     getTag(arrayOfRecipes);
-    numberOfRecipes(arrayOfRecipes);
 
     if (searchbarMachines.value.length === 0) {
       displayRecipes(recipes);
@@ -387,30 +374,23 @@ const searchbarTools = document.getElementById("searchbar-tools");
 searchbarTools.addEventListener("input", findToolsFilter);
 
 function findToolsFilter() {
-  
+
+  let arrayOfUstensils = [];
+
   if (mainSearchFirst) {
     
     let newRecipes = [];
 
     if (searchbarTools.value.length >= 3) {
 
-      for (let i = 0; i < arrayOfRecipes.length; i++) {
-          
-         for (let j = 0; j < arrayOfRecipes[i].ustensils.length; j++) {
-
-           if (arrayOfRecipes[i].ustensils[j].toLowerCase().includes(searchbarTools.value.toLowerCase())) {
-
-            newRecipes.push(arrayOfRecipes[i]);
-            displayRecipes(newRecipes);
-            numberOfRecipes(newRecipes);
-            displayFood(newRecipes);
-            displayMachines(newRecipes);
-            displayTools(newRecipes);
-            break;           
-          }
-        } 
-      } 
-    }
+      newRecipes = arrayOfRecipes.filter(recipe =>
+        recipe.ustensils.some(ustensil =>
+          ustensil.toLowerCase().includes(algoSearch.value.toLowerCase())))
+      
+      getTag(newRecipes);
+      displayRecipes(newRecipes);
+      numberOfRecipes(newRecipes);
+    } 
       
     if (searchbarTools.value.length === 0) {
       displayRecipes(arrayOfRecipes);
@@ -422,25 +402,24 @@ function findToolsFilter() {
     
   } else if (!mainSearchFirst) {
 
-    arrayOfRecipes = [];
-    let arrayOfUstensils = [];
+    let arrayOfRecipes = [];
 
     if (searchbarTools.value.length >= 3) {
   
-      for (let i = 0; i < recipes.length; i++) {
-      
-        for (let j = 0; j < recipes[i].ustensils.length; j++) {
-  
-          if (recipes[i].ustensils[j].toLowerCase().includes(searchbarTools.value.toLowerCase())) {
-  
-            arrayOfUstensils.push(recipes[i].ustensils[j])
-            console.log(arrayOfUstensils);
-            arrayOfRecipes.push(recipes[i]);
-            displayRecipes(arrayOfRecipes);
-            break;          
+      arrayOfRecipes = recipes.filter(recipe =>
+        recipe.ustensils.some(ustensil =>
+          ustensil.toLowerCase().includes(searchbarTools.value.toLowerCase()))
+        )
+
+      arrayOfRecipes.forEach(recipe => 
+        recipe.ustensils.forEach(ustensil => {
+          if (ustensil.toLowerCase().includes(searchbarTools.value.toLowerCase())) {
+            arrayOfUstensils.push(ustensil.toLowerCase());
           }
-        } 
-      } 
+        })
+      );
+      numberOfRecipes(arrayOfRecipes);
+      displayRecipes(arrayOfRecipes);  
     }
   
     listTools.innerHTML = "";
@@ -462,7 +441,6 @@ function findToolsFilter() {
     })
     
     getTag(arrayOfRecipes);
-    numberOfRecipes(arrayOfRecipes);
 
     if (searchbarTools.value.length === 0) {
       displayRecipes(recipes);
