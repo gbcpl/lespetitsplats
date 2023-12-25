@@ -316,10 +316,10 @@ function findFoodFilter() {
     listFood.innerHTML = "";
     let ingredientsList = [];
 
-    arrayOfIngredients.forEach(ingredient => {
+    for (let i = 0; i < arrayOfIngredients.length; i++) {
 
-      const currentFood = ingredient.toLowerCase();
-        
+      const currentFood = arrayOfIngredients[i].toLowerCase();
+
       if (!ingredientsList.includes(currentFood)) {
           ingredientsList.push(currentFood);
           console.log(ingredientsList);
@@ -330,7 +330,7 @@ function findFoodFilter() {
       } else {
         console.log("nope")
       }
-    })
+    }
 
     getTag(arrayOfRecipes);
     numberOfRecipes(arrayOfRecipes);
@@ -358,10 +358,10 @@ function findMachineFilter() {
 
     if (searchbarMachines.value.length >= 3) {
       for (let i = 0; i < arrayOfRecipes.length; i++) {
-      
-        if (arrayOfRecipes[i].appliance.toLowerCase().includes(searchbarMachines.value.toLowerCase())) {
+    
+        if (!arrayOfRecipes[i].appliance.toLowerCase().includes(searchbarMachines.value.toLowerCase())) {
 
-          newRecipes.push(arrayOfRecipes[i]);
+          newRecipes.push(arrayOfRecipes[i].appliance);
           displayRecipes(newRecipes);
           numberOfRecipes(newRecipes);
           displayFood(newRecipes);
@@ -404,13 +404,12 @@ function findMachineFilter() {
     searchAppliance.innerHTML = "";
     let appliancesList = [];
 
-    console.log(arrayOfAppliances);
-    arrayOfAppliances.forEach(appliance => {
+    for (let i = 0; i < arrayOfAppliances.length; i++) {
 
-      const currentAppliance = appliance.toLowerCase();
-        
+      const currentAppliance = arrayOfAppliances[i].toLowerCase();
+
       if (!appliancesList.includes(currentAppliance)) {
-          appliancesList.push(currentAppliance);
+        appliancesList.push(currentAppliance);
           console.log(appliancesList);
           const applianceList = document.createElement("p");
           applianceList.innerHTML = currentAppliance;
@@ -418,8 +417,8 @@ function findMachineFilter() {
           searchAppliance.appendChild(applianceList);
       } else {
         console.log("nope")
-      } 
-    })
+      }
+    }
   
     getTag(arrayOfRecipes);
     numberOfRecipes(arrayOfRecipes);
@@ -498,20 +497,21 @@ function findToolsFilter() {
     listTools.innerHTML = "";
     let ustensilsList = [];
 
-    arrayOfUstensils.forEach(ustensil => {
+    for (let i = 0; i < arrayOfUstensils.length; i++) {
 
-      const currentUstensil = ustensil.toLowerCase();
+      const currentUstensil = arrayOfUstensils[i].toLowerCase();
 
       if (!ustensilsList.includes(currentUstensil)) {
         ustensilsList.push(currentUstensil);
-        const toolsList = document.createElement("p");
-        toolsList.innerHTML = currentUstensil;
-        toolsList.classList.add("results-list");
-        listTools.appendChild(toolsList);
-    } else {
-      console.log("nope")
+          const ustensilList = document.createElement("p");
+          ustensilList.innerHTML = currentUstensil;
+          ustensilList.classList.add("results-list");
+          listTools.appendChild(ustensilList);
+      } else {
+        console.log("nope")
+      }
     }
-    })
+  
     
     getTag(arrayOfRecipes);
     numberOfRecipes(arrayOfRecipes);
