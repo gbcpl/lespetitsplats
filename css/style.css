@@ -267,3 +267,8 @@ main {
   line-height: 4;
   margin-right: 10px;
 }
+
+.div-tags {
+  display: flex;
+  flex-direction: row;
+}

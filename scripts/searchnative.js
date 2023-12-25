@@ -183,10 +183,16 @@ function getTag(array) {
         const tagText = list[i].textContent.toLowerCase();
         if (!arrayOfTags.includes(tagText)) {
           arrayOfTags.push(tagText);
+          const div = document.createElement("div");
           const tag = document.createElement("p");
+          const cross = document.createElement("p");
+          cross.innerHTML = `<i class="fa-solid fa-xmark"></i>`
           tag.innerHTML = tagText;
           tag.classList.add("tag");
-          tags.appendChild(tag);
+          div.classList.add("div-tags")
+          div.appendChild(tag);
+          div.appendChild(cross);
+          tags.appendChild(div);
 
           updateRecipes(arrayOfTags);
         }
