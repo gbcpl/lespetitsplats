@@ -211,8 +211,6 @@ function getTag(array) {
       
       const crosses = document.querySelectorAll(".fa-xmark");
 
-      /*
-
       for (let i = 0; i < crosses.length; i++) {
         crosses[i].addEventListener("click", function(event) {
           event.target.parentNode.parentNode.remove();
@@ -228,8 +226,9 @@ function getTag(array) {
   
         });
       }
-      */
       
+      
+      /*
       crosses.forEach(cross => {
         cross.addEventListener("click", function(event) {
           event.target.parentNode.parentNode.remove();
@@ -245,6 +244,7 @@ function getTag(array) {
   
         });
       })
+      */
     })
   }
 
