@@ -257,18 +257,22 @@ main {
   text-transform: uppercase;
 }
 
-.tag {
+.div-tags {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   background-color: rgba(255, 209, 91, 1);
   width: 203px;
   height: 53px;
   font-size: 14px;
   border-radius: 10px;
   padding-left: 10px;
+  padding-right: 10px;
   line-height: 4;
   margin-right: 10px;
 }
 
-.div-tags {
-  display: flex;
-  flex-direction: row;
+.fa-xmark {
+  cursor: pointer;
 }
