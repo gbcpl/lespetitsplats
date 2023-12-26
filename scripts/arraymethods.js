@@ -157,10 +157,16 @@ function getTag(array) {
         
         if (!arrayOfTags.includes(tagText)) {
           arrayOfTags.push(tagText);
+          const div = document.createElement("div");
           const tag = document.createElement("p");
+          const cross = document.createElement("p");
+          cross.innerHTML = `<i class="fa-solid fa-xmark"></i>`
           tag.innerHTML = tagText;
           tag.classList.add("tag");
-          tags.appendChild(tag);
+          div.classList.add("div-tags")
+          div.appendChild(tag);
+          div.appendChild(cross);
+          tags.appendChild(div);
 
           updateRecipes(arrayOfTags);
         }
@@ -176,6 +182,24 @@ function getTag(array) {
           updateRecipes(arrayOfTags);
         }
       }
+    })
+
+    const crosses = document.querySelectorAll(".div-tags");
+
+    crosses.forEach(cross => {
+      cross.addEventListener("click", function(event) {
+        event.target.parentNode.parentNode.remove();
+        list[i].style.backgroundColor = null;
+        clickableList = false;
+
+        const tagText = list[i].textContent.toLowerCase();
+        const index = arrayOfTags.indexOf(tagText);
+        if (index !== -1) {
+          arrayOfTags.splice(index, 1);
+          updateRecipes(arrayOfTags);
+        }
+
+      });
     })
   })
   
