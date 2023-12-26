@@ -182,24 +182,23 @@ function getTag(array) {
           updateRecipes(arrayOfTags);
         }
       }
-    })
+      const crosses = document.querySelectorAll(".fa-xmark");
 
-    const crosses = document.querySelectorAll(".div-tags");
+      crosses.forEach(cross => {
+        cross.addEventListener("click", function(event) {
+          event.target.parentNode.parentNode.remove();
+          listTag.style.backgroundColor = null;
+          clickableList = false;
+          console.log("test")
+          const tagText = listTag.textContent.toLowerCase();
+          const index = arrayOfTags.indexOf(tagText);
+          if (index !== -1) {
+            arrayOfTags.splice(index, 1);
+            updateRecipes(arrayOfTags);
+          }
 
-    crosses.forEach(cross => {
-      cross.addEventListener("click", function(event) {
-        event.target.parentNode.parentNode.remove();
-        list[i].style.backgroundColor = null;
-        clickableList = false;
-
-        const tagText = list[i].textContent.toLowerCase();
-        const index = arrayOfTags.indexOf(tagText);
-        if (index !== -1) {
-          arrayOfTags.splice(index, 1);
-          updateRecipes(arrayOfTags);
-        }
-
-      });
+        });
+      })
     })
   })
   
