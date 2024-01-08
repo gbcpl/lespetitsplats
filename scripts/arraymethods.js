@@ -1,3 +1,6 @@
+import { displayRecipes, openFood, openMachines, openTools, listRecipes, number, foodOpen, machinesOpen, toolsOpen } from "index.js";
+import { recipes } from "./data/recipes.js";
+
 const algoSearch = document.getElementById("searchFood");
 const listFood = document.getElementById("food-list");
 const searchAppliance = document.getElementById("machines-list");
@@ -26,7 +29,7 @@ function findFood() {
         recipe.ingredients.some(ingredient => 
           ingredient.ingredient.toLowerCase().includes(algoSearch.value.toLowerCase())) ||
         recipe.description.toLowerCase().includes(algoSearch.value.toLowerCase()) ||
-        recipe.name.toLowerCase().includes(algoSearch.value.toLowerCase()))
+        recipe.name.toLowerCase().includes(algoSearch.value.toLowerCase()));
             
       displayRecipes(arrayOfRecipes);
 
@@ -59,6 +62,7 @@ function findFood() {
       displayFood(recipes);
       displayMachines(recipes);
       displayTools(recipes);
+      getTag(recipes);
     }  
 }
 
@@ -78,8 +82,8 @@ function displayFood(array) {
         ingredientList.classList.add("results-list");
         listFood.appendChild(ingredientList);
       }
-    })
-  })
+    });
+  });
 }
 
 function displayMachines(array) {
@@ -96,7 +100,7 @@ function displayMachines(array) {
       appliance.classList.add("results-list");
       searchAppliance.appendChild(appliance);
     }
-  })
+  });
 }
 
 function displayTools(array) {
@@ -114,8 +118,8 @@ function displayTools(array) {
         ustensil.classList.add("results-list");
         listTools.appendChild(ustensil);
       }
-    })
-  })
+    });
+  });
 }
 
 displayFood(recipes);
@@ -160,10 +164,11 @@ function getTag(array) {
           const div = document.createElement("div");
           const tag = document.createElement("p");
           const cross = document.createElement("p");
-          cross.innerHTML = `<i class="fa-solid fa-xmark"></i>`
+          // eslint-disable-next-line quotes
+          cross.innerHTML = `<i class="fa-solid fa-xmark"></i>`;
           tag.innerHTML = tagText;
           tag.classList.add("tag");
-          div.classList.add("div-tags")
+          div.classList.add("div-tags");
           div.appendChild(tag);
           div.appendChild(cross);
           tags.appendChild(div);
@@ -182,25 +187,26 @@ function getTag(array) {
           updateRecipes(arrayOfTags);
         }
       }
+      
       const crosses = document.querySelectorAll(".fa-xmark");
+      const cross = crosses[crosses.length - 1];
 
-      crosses.forEach(cross => {
         cross.addEventListener("click", function(event) {
           event.target.parentNode.parentNode.remove();
           listTag.style.backgroundColor = null;
           clickableList = false;
-          console.log("test")
+          console.log("test");
           const tagText = listTag.textContent.toLowerCase();
           const index = arrayOfTags.indexOf(tagText);
           if (index !== -1) {
             arrayOfTags.splice(index, 1);
+            console.log(arrayOfTags);
             updateRecipes(arrayOfTags);
           }
 
         });
-      })
-    })
-  })
+    });
+  });
   
   // verify if tag clicked is present in recipe, if true, filter it in filteredRecipes, then display it
   // this function is called each time the user add or delete a tag
@@ -234,16 +240,12 @@ function findFoodFilter() {
 
     let newRecipes = [];
 
-    if (searchbarFood.value.length >= 3) {
-
-      newRecipes = arrayOfRecipes.filter(recipe => 
-        recipe.ingredients.some(ingredient => 
-          ingredient.ingredient.toLowerCase().includes(algoSearch.value.toLowerCase())))
-
-      getTag(newRecipes);
-      displayRecipes(newRecipes);
-      numberOfRecipes(newRecipes);
-    }
+    newRecipes = arrayOfRecipes.filter(recipe => 
+      recipe.ingredients.some(ingredient => 
+        ingredient.ingredient.toLowerCase().includes(searchbarFood.value.toLowerCase())));
+    getTag(newRecipes);
+    displayRecipes(newRecipes);
+    numberOfRecipes(newRecipes);
 
     if (searchbarFood.value.length === 0) {
       displayRecipes(arrayOfRecipes);
@@ -256,26 +258,24 @@ function findFoodFilter() {
   } else if (!mainSearchFirst) {
 
     let arrayOfRecipes = [];
+  
+    arrayOfRecipes = recipes.filter(recipe =>
+      recipe.ingredients.some(ingredient =>
+        ingredient.ingredient.toLowerCase().includes(searchbarFood.value.toLowerCase())
+      )
+    );
 
-    if (searchbarFood.value.length >= 3) {
-  
-      arrayOfRecipes = recipes.filter(recipe =>
-        recipe.ingredients.some(ingredient =>
-          ingredient.ingredient.toLowerCase().includes(searchbarFood.value.toLowerCase())
-        )
-      );
-  
-      arrayOfRecipes.forEach(recipe =>
-        recipe.ingredients.forEach(ingredient => {
-          if (ingredient.ingredient.toLowerCase().includes(searchbarFood.value.toLowerCase())) {
-            arrayOfIngredients.push(ingredient.ingredient.toLowerCase());
-          }
-        })
-        
-      );
-      numberOfRecipes(arrayOfRecipes);
-      displayRecipes(arrayOfRecipes);  
-    } 
+    arrayOfRecipes.forEach(recipe =>
+      recipe.ingredients.forEach(ingredient => {
+        if (ingredient.ingredient.toLowerCase().includes(searchbarFood.value.toLowerCase())) {
+          arrayOfIngredients.push(ingredient.ingredient.toLowerCase());
+        }
+      })
+      
+    );
+    numberOfRecipes(arrayOfRecipes);
+    displayRecipes(arrayOfRecipes);  
+    
     
     listFood.innerHTML = "";
     let ingredientsList = [];
@@ -292,9 +292,9 @@ function findFoodFilter() {
           ingredientList.classList.add("results-list");
           listFood.appendChild(ingredientList);
       } else {
-        console.log("nope")
+        console.log("nope");
       }
-    })
+    });
 
     getTag(arrayOfRecipes);
 
@@ -323,16 +323,13 @@ function findMachineFilter() {
     
     let newRecipes = [];
 
-    if (searchbarMachines.value.length >= 3) {
-
-      newRecipes = arrayOfRecipes.filter(recipe => 
-        recipe.appliance.toLowerCase().includes(algoSearch.value.toLowerCase())
-      )
-
-      getTag(newRecipes);
-      displayRecipes(newRecipes);
-      numberOfRecipes(newRecipes);      
-    } 
+    newRecipes = arrayOfRecipes.filter(recipe => 
+      recipe.appliance.toLowerCase().includes(searchbarMachines.value.toLowerCase())
+    );
+    getTag(newRecipes);
+    displayRecipes(newRecipes);
+    numberOfRecipes(newRecipes);      
+    
 
     if (searchbarMachines.value.length === 0) {
       displayRecipes(arrayOfRecipes);
@@ -345,21 +342,18 @@ function findMachineFilter() {
   } else if (!mainSearchFirst) {
   
     let arrayOfRecipes = [];
-
-    if (searchbarMachines.value.length >= 3) {
   
-      arrayOfRecipes = recipes.filter(recipe =>
-        recipe.appliance.toLowerCase().includes(searchbarMachines.value.toLowerCase())
-      );
-      console.log(arrayOfRecipes)
-
-      arrayOfRecipes.forEach(recipe =>
-        arrayOfAppliances.push(recipe.appliance.toLowerCase())
-      )
-      console.log(arrayOfAppliances);
-      numberOfRecipes(arrayOfRecipes);
-      displayRecipes(arrayOfRecipes);
-    }
+    arrayOfRecipes = recipes.filter(recipe =>
+      recipe.appliance.toLowerCase().includes(searchbarMachines.value.toLowerCase())
+    );
+    console.log(arrayOfRecipes);
+    arrayOfRecipes.forEach(recipe =>
+      arrayOfAppliances.push(recipe.appliance.toLowerCase())
+    );
+    console.log(arrayOfAppliances);
+    numberOfRecipes(arrayOfRecipes);
+    displayRecipes(arrayOfRecipes);
+    
     
     searchAppliance.innerHTML = "";
     let appliancesList = [];
@@ -376,9 +370,9 @@ function findMachineFilter() {
           applianceList.classList.add("results-list");
           searchAppliance.appendChild(applianceList);
       } else {
-        console.log("nope")
+        console.log("nope");
       } 
-    })
+    });
   
     getTag(arrayOfRecipes);
 
@@ -404,16 +398,13 @@ function findToolsFilter() {
     
     let newRecipes = [];
 
-    if (searchbarTools.value.length >= 3) {
-
-      newRecipes = arrayOfRecipes.filter(recipe =>
-        recipe.ustensils.some(ustensil =>
-          ustensil.toLowerCase().includes(algoSearch.value.toLowerCase())))
-      
-      getTag(newRecipes);
-      displayRecipes(newRecipes);
-      numberOfRecipes(newRecipes);
-    } 
+    newRecipes = arrayOfRecipes.filter(recipe =>
+      recipe.ustensils.some(ustensil =>
+        ustensil.toLowerCase().includes(searchbarTools.value.toLowerCase())));
+    
+    getTag(newRecipes);
+    displayRecipes(newRecipes);
+    numberOfRecipes(newRecipes);
       
     if (searchbarTools.value.length === 0) {
       displayRecipes(arrayOfRecipes);
@@ -427,23 +418,20 @@ function findToolsFilter() {
 
     let arrayOfRecipes = [];
 
-    if (searchbarTools.value.length >= 3) {
-  
-      arrayOfRecipes = recipes.filter(recipe =>
-        recipe.ustensils.some(ustensil =>
-          ustensil.toLowerCase().includes(searchbarTools.value.toLowerCase()))
-        )
-
-      arrayOfRecipes.forEach(recipe => 
-        recipe.ustensils.forEach(ustensil => {
-          if (ustensil.toLowerCase().includes(searchbarTools.value.toLowerCase())) {
-            arrayOfUstensils.push(ustensil.toLowerCase());
-          }
-        })
+    arrayOfRecipes = recipes.filter(recipe =>
+      recipe.ustensils.some(ustensil =>
+        ustensil.toLowerCase().includes(searchbarTools.value.toLowerCase()))
       );
-      numberOfRecipes(arrayOfRecipes);
-      displayRecipes(arrayOfRecipes);  
-    }
+    arrayOfRecipes.forEach(recipe => 
+      recipe.ustensils.forEach(ustensil => {
+        if (ustensil.toLowerCase().includes(searchbarTools.value.toLowerCase())) {
+          arrayOfUstensils.push(ustensil.toLowerCase());
+        }
+      })
+    );
+    numberOfRecipes(arrayOfRecipes);
+    displayRecipes(arrayOfRecipes);  
+    
   
     listTools.innerHTML = "";
     let ustensilsList = [];
@@ -459,9 +447,9 @@ function findToolsFilter() {
         toolsList.classList.add("results-list");
         listTools.appendChild(toolsList);
     } else {
-      console.log("nope")
+      console.log("nope");
     }
-    })
+    });
     
     getTag(arrayOfRecipes);
 

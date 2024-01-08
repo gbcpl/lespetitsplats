@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 const recipes = [
     {
         "id": 1,
@@ -1773,5 +1774,6 @@ const recipes = [
         "appliance": "Four",
         "ustensils":["rouleau à patisserie","fouet"]
     }
-]
+];
 
+export { recipes };

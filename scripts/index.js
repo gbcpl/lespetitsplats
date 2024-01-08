@@ -1,3 +1,5 @@
+import { recipes } from "./data/recipes.js";
+
 const number = document.getElementById("number-of-recipes");
 
 number.innerHTML = recipes.length + " recettes";
@@ -11,7 +13,7 @@ function displayRecipes(array) {
   listRecipes.innerHTML = "";
 
   array.forEach((recipe) => {
-    const photo = `assets/images/${recipe.image}`
+    const photo = `assets/images/${recipe.image}`;
     const divRecipes = document.createElement("div");
     const img = document.createElement("img");
     const recipeTitle = document.createElement("h2");
@@ -24,16 +26,18 @@ function displayRecipes(array) {
     img.setAttribute("src", photo);
     divRecipes.setAttribute("class", "recipes");
     recipeTitle.innerHTML = recipe.name;
-    recipeRecette.setAttribute("class", "titles")
+    recipeRecette.setAttribute("class", "titles");
     recipeRecette.innerHTML = "RECETTE";
-    description.setAttribute("class", "description")
+    description.setAttribute("class", "description");
     description.innerHTML = recipe.description;
     recipeFood.innerHTML = "INGREDIENTS";
     recipeFood.setAttribute("class", "titles");
     divFoods.setAttribute("class", "foods");
     time.innerHTML = recipe.time + "min";
     time.setAttribute("class", "time");
-    numberOfFood = recipe.ingredients;
+
+    let numberOfFood = recipe.ingredients;
+    console.log(numberOfFood);
 
     numberOfFood.forEach((food) => {
 
@@ -41,13 +45,13 @@ function displayRecipes(array) {
       const listOfFood = document.createElement("p");
       const listOfNumber = document.createElement("p");
 
-      listOfFood.setAttribute("class", "titleFood")
+      listOfFood.setAttribute("class", "titleFood");
       listOfNumber.setAttribute("class", "numberFood");
       listOfFood.innerHTML = food.ingredient;
       if (food.unit) {
-        listOfNumber.innerHTML = food.quantity + food.unit;
+        listOfNumber.innerHTML = food.quantity + " " + food.unit;
       } else {
-        listOfNumber.innerHTML = food.quantity
+        listOfNumber.innerHTML = food.quantity;
       }
 
       divFood.setAttribute("class", "food");
@@ -56,7 +60,7 @@ function displayRecipes(array) {
         divFood.appendChild(listOfNumber);
       }
       divFoods.appendChild(divFood);
-    })  
+    });  
 
     listRecipes.appendChild(divRecipes);
     divRecipes.appendChild(img);
@@ -65,9 +69,9 @@ function displayRecipes(array) {
     divRecipes.appendChild(description);
     divRecipes.appendChild(recipeFood);
     divRecipes.appendChild(divFoods);
-    divRecipes.appendChild(time)
+    divRecipes.appendChild(time);
 
-  })
+  });
 }
 
 displayRecipes(recipes);
@@ -77,13 +81,13 @@ displayRecipes(recipes);
 const food = document.getElementById("food");
 const searchFood = document.getElementById("search-food");
 
-foodOpen = false;
+let foodOpen = false;
 
 function openFood() {
   if (!foodOpen) {
     searchFood.style.display = "block";
     searchMachines.style.display = "none";
-    searchTools.style.display = "none"
+    searchTools.style.display = "none";
     foodOpen = true;
     machinesOpen = false;
     toolsOpen = false;
@@ -100,13 +104,13 @@ food.addEventListener("click", openFood);
 const machines = document.getElementById("machines");
 const searchMachines = document.getElementById("search-machines");
 
-machinesOpen = false;
+let machinesOpen = false;
 
 function openMachines() {
   if (!machinesOpen) {
     searchMachines.style.display = "block";
     searchFood.style.display = "none";
-    searchTools.style.display = "none"
+    searchTools.style.display = "none";
     machinesOpen = true;
     foodOpen = false;
     toolsOpen = false;
@@ -122,7 +126,7 @@ machines.addEventListener("click", openMachines);
 
 const tools = document.getElementById("tools");
 const searchTools = document.getElementById("search-tools");
-toolsOpen = false;
+let toolsOpen = false;
 
 function openTools() {
   if (!toolsOpen) {
@@ -139,3 +143,4 @@ function openTools() {
 }
 
 tools.addEventListener("click", openTools);
+export { displayRecipes, openFood, openMachines, openTools, listRecipes, number, foodOpen, machinesOpen, toolsOpen };
