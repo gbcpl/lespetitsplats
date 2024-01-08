@@ -1,5 +1,5 @@
-import { displayRecipes, openFood, openMachines, openTools, listRecipes, number, foodOpen, machinesOpen, toolsOpen } from "index.js";
-import { recipes } from "./data/recipes.js";
+import { displayRecipes, openFood, openMachines, openTools, listRecipes, number, foodOpen, machinesOpen, toolsOpen } from "./index.js";
+import { recipes } from "../data/recipes.js";
 
 const algoSearch = document.getElementById("searchFood");
 const listFood = document.getElementById("food-list");

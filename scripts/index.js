@@ -1,4 +1,4 @@
-import { recipes } from "./data/recipes.js";
+import { recipes } from "../data/recipes.js";
 
 const number = document.getElementById("number-of-recipes");
 
